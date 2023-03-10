@@ -1,0 +1,23 @@
+name: lagon
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'The Lagon CLI command to run. For example: "deploy" - will publish your Function'
+        required: true
+      site_url:
+        description: "Specify custom url for self-hosted Lagon instances"
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v2
+      - uses: _ACTION_REPO_
+        with:
+          lagon_token: ${{ secrets.LAGON_API_TOKEN }}
+          command: ${{ github.event.inputs.command }}
+          site_url: ${{ github.event.inputs.site_url }}
